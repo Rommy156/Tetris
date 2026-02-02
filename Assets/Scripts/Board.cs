@@ -9,18 +9,17 @@ public class Board : MonoBehaviour
 {
     //variables for the board
     public TetronimoData[] tetronimos;
-
     public Vector2Int boardSize; 
     public Vector2Int startPosition;
     public Piece piecePrefab;
     public Tilemap tilemap;
     public TetrisManager tetrisManager;
     public float dropInterval = 0.5f;
-
     public float rotationInterval = 2f;
-    public int autoRotationDiretion = 1;
-
+    public int autoRotationDirection = 1;
     public float rotationTimer = 0f;
+
+
     Piece activePiece;
     float time = 0.0f;
 
@@ -57,12 +56,12 @@ public class Board : MonoBehaviour
             Clear(activePiece);
 
             //rotate the piece
-            activePiece.Rotate(autoRotationDiretion);
+            activePiece.Rotate(autoRotationDirection);
 
             //if rotation is not valid rotate back
             if (!isPositionValid(activePiece, activePiece.position))
             {
-                activePiece.Rotate(-autoRotationDiretion);
+                activePiece.Rotate(-autoRotationDirection);
             }
 
             bool moveResult = activePiece.Move(Vector2Int.down);
@@ -80,7 +79,7 @@ public class Board : MonoBehaviour
     public void SpawnPiece()
     {
         //make rotation direction random
-        autoRotationDiretion = Random.value > 0.5f ? 1 : -1;
+        autoRotationDirection = Random.value > 0.5f ? 1 : -1;
 
         activePiece = Instantiate(piecePrefab, transform);
         Tetronimo t = (Tetronimo)Random.Range(0, tetronimos.Length);

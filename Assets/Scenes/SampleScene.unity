@@ -580,12 +580,24 @@ MonoBehaviour:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
     tile: {fileID: 11400000, guid: e3baf6052ef93294599426a212246da7, type: 2}
+  - tetronimo: 7
+    cells:
+    - {x: -2, y: 0}
+    - {x: -1, y: 0}
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: -1, y: 1}
+    - {x: 0, y: 1}
+    tile: {fileID: 11400000, guid: f65ef10344f312c4b84e920053dfc8bb, type: 2}
   boardSize: {x: 10, y: 20}
   startPosition: {x: 2, y: 8}
   piecePrefab: {fileID: 3182057290897824139, guid: 674573d8f6c5cba44a49fcab11326d32, type: 3}
   tilemap: {fileID: 1779745732}
   tetrisManager: {fileID: 1913351392}
-  dropInterval: 0.5
+  dropInterval: 1
+  rotationInterval: 2
+  autoRotationDirection: 1
+  rotationTimer: 0
 --- !u!156049354 &793293234
 Grid:
   m_ObjectHideFlags: 0
