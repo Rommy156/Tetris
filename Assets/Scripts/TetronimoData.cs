@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 // Its a mapping of the tetronimo shapes to an int.
 public enum Tetronimo
 {
-    I , O, T, S, Z, J, L
+    I , O, T, S, Z, J, L, D
 }
 
 [Serializable]

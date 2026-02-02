@@ -84,7 +84,7 @@ public class Piece : MonoBehaviour
 
     }
 
-    void Rotate(int direction)
+    public void Rotate(int direction)
     {
         Vector2Int[] originalCells = new Vector2Int[cells.Length];
         for (int i = 0; i < cells.Length; i++)
