@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 
 public class Board : MonoBehaviour
 {
+    //variables for the board
     public TetronimoData[] tetronimos;
 
     public Vector2Int boardSize; 
@@ -14,11 +15,13 @@ public class Board : MonoBehaviour
     public Piece piecePrefab;
     public Tilemap tilemap;
     public TetrisManager tetrisManager;
-
     public float dropInterval = 0.5f;
 
-    Piece activePiece;
+    public float rotationInterval = 2f;
+    public int autoRotationDiretion = 1;
 
+    public float rotationTimer = 0f;
+    Piece activePiece;
     float time = 0.0f;
 
     Dictionary<Vector3Int, Piece> pieces = new Dictionary<Vector3Int, Piece>();
@@ -38,13 +41,29 @@ public class Board : MonoBehaviour
 
     private void Update()
     {
+        //do not update if game is over
         if (tetrisManager.gameOver) return;
+        //handle piece dropping over time
+        //rotate piece as it drops
+
         time += Time.deltaTime;
-        if (time >= dropInterval)
+        rotationTimer += Time.deltaTime;
+
+        if (rotationTimer >= rotationInterval )
         {
-            time = 0.0f;
+            
+            rotationTimer = 0.0f;
 
             Clear(activePiece);
+
+            //rotate the piece
+            activePiece.Rotate(autoRotationDiretion);
+
+            //if rotation is not valid rotate back
+            if (!isPositionValid(activePiece, activePiece.position))
+            {
+                activePiece.Rotate(-autoRotationDiretion);
+            }
 
             bool moveResult = activePiece.Move(Vector2Int.down);
 
@@ -60,6 +79,9 @@ public class Board : MonoBehaviour
     }
     public void SpawnPiece()
     {
+        //make rotation direction random
+        autoRotationDiretion = Random.value > 0.5f ? 1 : -1;
+
         activePiece = Instantiate(piecePrefab, transform);
         Tetronimo t = (Tetronimo)Random.Range(0, tetronimos.Length);
         activePiece.Initialize(this, t);

@@ -41,11 +41,12 @@ public class Piece : MonoBehaviour
         //if game is over do not process any input
         if (board.tetrisManager.gameOver) return;
         
-
         //every frame clear the piece from the board 
         if (freeze) return;
 
         board.Clear(this);
+
+        HandleRotation();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -82,6 +83,17 @@ public class Piece : MonoBehaviour
             board.SpawnPiece();
         }
 
+    }
+    void HandleRotation()
+    {
+        if (freeze || !board.isPositionValid(this, position + Vector2Int.down)) return;
+
+        board.rotationTimer += Time.deltaTime;
+        if (board.rotationTimer >= board.rotationInterval)
+        {
+            board.rotationTimer = 0f;
+            Rotate(1);
+        }
     }
 
     public void Rotate(int direction)
@@ -148,8 +160,11 @@ public class Piece : MonoBehaviour
             Quaternion rotation = Quaternion.Euler(0, 0, 90 * direction);
 
 
-            bool isSpecial = data.tetronimo == Tetronimo.I || data.tetronimo == Tetronimo.O;
-            for (int i = 0; i < cells.Length; i++)
+        bool isSpecial = data.tetronimo == Tetronimo.I || data.tetronimo == Tetronimo.O;
+        //additional check for D tetronimo
+        bool isSpecial2 = data.tetronimo == Tetronimo.D;
+
+        for (int i = 0; i < cells.Length; i++)
             {
                 //local celll postion
                 //Vector2Int cellPosition = cells[i];
@@ -161,8 +176,13 @@ public class Piece : MonoBehaviour
                     cellPosition.x -= 0.5f;
                     cellPosition.y -= 0.5f;
                 }
-                //rotate the cell position
-                Vector3 result = rotation * cellPosition;
+                else if (isSpecial2)
+            {
+                cellPosition.x -= .33333f;
+                cellPosition.y -= .3333f;
+            }
+            //rotate the cell position
+            Vector3 result = rotation * cellPosition;
 
                 //place back into cells data
                 if (isSpecial)
