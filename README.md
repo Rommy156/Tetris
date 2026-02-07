@@ -1,6 +1,6 @@
 # Tetris (Rotris)
 
-# Tetris Iteration with Auto Rotation mechanic
+## Tetris Iteration with Auto Rotation mechanic
 
 ### [A] [D] [S] to move left, right, or down respectively
 
